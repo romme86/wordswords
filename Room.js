@@ -85,7 +85,7 @@ module.exports = class Room {
     for (var i = 0, len = this.players.length; i < len; i++) {
       array_players_phrases.push(this.players[i].phrase);
     }
-    return array_players_phrases;
+    return array_players_phrases; 
   }
   creaMapOfShuffle(array_frasi_mischiate){
     for (var i = 0, len = array_frasi_mischiate.length; i < len; i++) {
