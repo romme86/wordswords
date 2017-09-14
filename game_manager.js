@@ -150,10 +150,10 @@ module.exports = {
             for (var i = 0, len = array_frasi_utenti.length; i < len; i++) {
                 if (i != len) {
                     json_list["utenti"] += array_frasi_utenti[i].proprietario + ",";
-                    json_list["seconde_parti"] += array_frasi_utenti[i].completamento_frase + ",";
+                    json_list["seconde_parti"] += array_frasi_utenti[i].completamento_frase + "|";
                 } else {
                     json_list["utenti"] += array_frasi_utenti[i].proprietario;
-                    json_list["seconde_parti"] += array_frasi_utenti[i].completamento_frase + ",";
+                    json_list["seconde_parti"] += array_frasi_utenti[i].completamento_frase + "|";
                 }
             }
             console.log("json delle frasi: " + util.inspect(json_list, false, null));
