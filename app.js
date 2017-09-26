@@ -93,6 +93,7 @@ io.on('connection', socketioJwt.authorize({
     game_manager.invito_accettato(msg, my_email, rooms, socket, io);
   });
   socket.on('cerca_partita', function (msg) {
+    console.log('richiesta di partita casuale');
     game_manager.cerca_partita(msg, my_email, rooms, socket, io);
   });
   socket.on('invio_scelta',function (frase){
@@ -115,25 +116,36 @@ io.on('connection', socketioJwt.authorize({
   socket.on('inizia_partita', function (msg) {
      game_manager.inizia_partita(msg, my_email, rooms, socket, io,mongoose);
   });
+  socket.on('inizia_partita', function (msg) {
+    game_manager.inizia_partita(msg, my_email, rooms, socket, io,mongoose);
+ });
+ socket.on('richiesta_utenti_online', function (msg) {
+  game_manager.richiesta_utenti_online(msg, my_email, rooms, socket, io,mongoose,users);
+});
   socket.on('prossimo_turno', function (msg) {
     game_manager.prossimo_turno(msg, my_email, rooms, socket, io,mongoose);
   });
   socket.on('distruggi_partita', function (msg) {
     game_manager.distruggi_partita(msg, my_email, rooms, socket, io);
   });
-//  socket.on('alive', function (msg) {
-//    console(my_email + " chiede se il server é vivo");
-//    io.in(socket.room.id).emit('iamalive',date_alive);
-//  });
   socket.on('disconnect', function () {
     console.log('8===================================D');
     console.log(my_email + ' é andato a puttane dal socket!');
+    var id_to_delete = netfurio.find_user_socket_id(users,my_email);
+    delete users.id_to_delete;
     console.log('C===================================8');
+
+  });
+  socket.on('reconnect',function(){
+    console.log('8====D');
+    console.log(my_email + ' cerca di riconnettersi al socket!');
+    console.log('C====8'); 
   });
 });
 
 app.post('/login', passport.authenticate('local', { failureFlash: "la mamma di passport é puttana", successFlash: 'la mamma di passport é una brava donna!' }), function (req, res) {
   console.log("utente in req " + req.user.email);
+  //controllare se l'utente é giá nella lista dei loggati
   var token = jwt.sign(req.user, jwtSecret);
   response = { "utente_trovato": 1, "token": token };
   res.send(response);

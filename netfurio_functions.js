@@ -15,7 +15,7 @@ module.exports = {
     }
     return -1;
   },
-  cerca_room_per_email: function (array_rooms, user_email, util) {//probabilmente inutilizzata
+  cerca_room_per_email: function (array_rooms, user_email, util) { //probabilmente inutilizzata
     for (var i = 0, len = array_rooms.length; i < len; i++) {
       for (var k = 0, lenk = array_rooms[i].players.length; k < lenk; k++) {
         if (array_rooms[i].players[k].email == user_email) {
@@ -52,7 +52,9 @@ module.exports = {
     return false;
   },
   lista_utenti: function (stanza) {
-    var json_list = { "utenti": "" };
+    var json_list = {
+      "utenti": ""
+    };
     for (var i = 0, len = stanza.players.length; i < len; i++) {
       if (i != len) {
         json_list["utenti"] += stanza.players[i].email + ",";
@@ -70,7 +72,7 @@ module.exports = {
     }
     return false;
   },
-  mischia: function (a) {//ty community wiki stackoverflow    
+  mischia: function (a) { //ty community wiki stackoverflow    
     var j, x, i;
     for (i = a.length; i; i--) {
       j = Math.floor(Math.random() * i);
@@ -95,7 +97,9 @@ module.exports = {
         delete lista_utenti[old_socket_id];
       }
     }
-    lista_utenti[socket_id] = { 'email': email };
+    lista_utenti[socket_id] = {
+      'email': email
+    };
   },
   addUsersToPhrase(socket, frase, mongoose, debug = false) {
     if (!debug) {
@@ -111,17 +115,44 @@ module.exports = {
       });
     }
   },
-  replace_accentate: function(stringa){
-	 stringa  = stringa.replace("é","e\'");
-	 stringa  = stringa.replace("á","a\'");
-	 stringa  = stringa.replace("í","i\'");
-	 stringa  = stringa.replace("ó","o\'");
-	 stringa  = stringa.replace("ú","u\'");
-	 stringa  = stringa.replace("è","e\'");
-	 stringa  = stringa.replace("à","a\'");
-	 stringa  = stringa.replace("ì","i\'");
-	 stringa  = stringa.replace("ò","o\'");
-	 stringa  = stringa.replace("ù","u\'");
-	 return stringa;
+  replace_accentate: function (stringa) {
+    stringa = stringa.replace("é", "e\'");
+    stringa = stringa.replace("á", "a\'");
+    stringa = stringa.replace("í", "i\'");
+    stringa = stringa.replace("ó", "o\'");
+    stringa = stringa.replace("ú", "u\'");
+    stringa = stringa.replace("è", "e\'");
+    stringa = stringa.replace("à", "a\'");
+    stringa = stringa.replace("ì", "i\'");
+    stringa = stringa.replace("ò", "o\'");
+    stringa = stringa.replace("ù", "u\'");
+    return stringa;
+  },
+  find_user_socket_id(arr,email){
+    for(id in arr){
+      if(arr[id].email == email){
+        return id;
+      }
+    }
+    return false;
+  },
+  getRandomFromArray(arr, n) {
+    var result = new Array(n),
+      len = arr.length,
+      taken = new Array(len),
+      counter = 0;
+    for (id in arr) {
+      taken.push(arr[id]);
+      counter++;
+    }
+    if (n > len)
+      throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+      var x = Math.floor(Math.random() * len);
+      if(taken[x] != null){
+        result[n] = taken[x];
+      }
+    }
+    return result;
   }
 }
