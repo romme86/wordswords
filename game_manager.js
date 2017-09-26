@@ -278,9 +278,6 @@ module.exports = {
         delete rooms[msg];
         //console.log("lista stanze per vedere se ho rimosso quella con id: " + msg + " lista: " + util.inspect(rooms, false, null));
         io.sockets.in(msg).emit('partita_distrutta', 1);
-        io.sockets.in(msg).emit('partita_distrutta_2', 1);//chiude classifica
-        io.sockets.in(msg).emit('partita_distrutta_3', 1);//chiude wordsgame
-        io.sockets.in(msg).emit('partita_distrutta_4', 1);//chiude game
         socket.leave(msg);
     }
 }
