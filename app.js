@@ -132,7 +132,9 @@ io.on('connection', socketioJwt.authorize({
     console.log('8===================================D');
     console.log(my_email + ' é andato a puttane dal socket!');
     var id_to_delete = netfurio.find_user_socket_id(users,my_email);
-    delete users.id_to_delete;
+    console.log("id da cancellare " + id_to_delete);
+    delete users[id_to_delete];
+    console.log("users online: " + util.inspect(users, false, null));
     console.log('C===================================8');
 
   });
